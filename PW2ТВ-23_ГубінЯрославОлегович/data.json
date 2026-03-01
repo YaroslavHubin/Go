@@ -1,0 +1,29 @@
+[
+  {
+    "name": "E-Motion FastCharge",
+    "location": "Київ, проспект Перемоги 45",
+    "power_kw": 120,
+    "available": true,
+    "devices": [
+      { "type": "CCS", "status": "Вільний" },
+      { "type": "CHAdeMO", "status": "Зайнятий" }
+    ],
+    "indicators": [
+      { "name": "Сесій сьогодні", "value": 15, "unit": "разів" },
+      { "name": "Середній час зарядки", "value": 30, "unit": "хв" }
+    ]
+  },
+  {
+    "name": "GreenVolt Station",
+    "location": "Львів, вул. Наукова 7",
+    "power_kw": 60,
+    "available": false,
+    "devices": [
+      { "type": "Type2", "status": "Зайнятий" },
+      { "type": "CCS", "status": "Недоступний" }
+    ],
+    "indicators": [
+      { "name": "Сесій сьогодні", "value": 0, "unit": "разів" }
+    ]
+  }
+]

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8"> <!-- Встановлюємо кодування UTF-8 -->
+    <title>Зарядні станції</title> <!-- Заголовок сторінки -->
+    <style>
+        /* CSS стилі для оформлення */
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .station { border:1px solid #ccc; padding:10px; margin:10px; }
+        .available { color: green; font-weight: bold; }
+        .unavailable { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h1>Зарядні станції для електромобілів</h1>
+
+<!-- Виводимо поточний час, який передаємо з Go -->
+<p><em>Поточний час: {{.Now}}</em></p>
+
+<!-- Список назв станцій (зроблено через for у Go, а тут range у шаблоні) -->
+<h2>Список назв станцій (зроблено через for у Go):</h2>
+<ul>
+    {{range .StationNames}} <!-- Цикл range проходить по списку назв -->
+        <li>{{.}}</li> <!-- Виводимо кожну назву -->
+    {{end}}
+</ul>
+
+<hr>
+
+<!-- Детальна інформація про кожну станцію -->
+<h2>Детальна інформація про станції:</h2>
+{{range .Stations}} <!-- Цикл range проходить по списку станцій -->
+    <div class="station">
+        <h3>{{.Name}}</h3> <!-- Назва станції -->
+        <p><strong>Локація:</strong> {{.Location}}</p> <!-- Локація -->
+        <p><strong>Потужність:</strong> {{.PowerKW}} кВт</p> <!-- Потужність -->
+
+        <!-- Умовний блок if: якщо станція доступна -->
+        {{if .Available}}
+            <p class="available">Станція доступна</p>
+        {{else}}
+            <p class="unavailable">Станція недоступна</p>
+        {{end}}
+
+        <!-- Список пристроїв -->
+        <h4>Пристрої:</h4>
+        <ul>
+            {{range .Devices}} <!-- Цикл range по списку пристроїв -->
+                <li>{{.Type}} — {{.Status}}</li> <!-- Тип і статус пристрою -->
+            {{end}}
+        </ul>
+
+        <!-- Список показників -->
+        <h4>Показники:</h4>
+        <ul>
+            {{range .Indicators}} <!-- Цикл range по списку показників -->
+                <li>{{.Name}}: {{.Value}} {{.Unit}}</li> <!-- Назва, значення, одиниця -->
+            {{end}}
+        </ul>
+    </div>
+{{end}}
+
+</body>
+</html>
