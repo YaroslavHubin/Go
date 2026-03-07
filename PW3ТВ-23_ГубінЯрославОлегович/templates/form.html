@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Зарядна станція</title>
+</head>
+<body>
+    <h1>Додати зарядну станцію</h1>
+    <form action="/submit" method="POST">
+        Ваше ім’я: <input type="text" name="username"><br>
+        Назва станції: <input type="text" name="name"><br>
+        Адреса: <input type="text" name="address"><br>
+        Кількість портів: <input type="number" name="ports"><br>
+        Потужність (кВт): <input type="number" step="0.1" name="power"><br>
+        Дата встановлення: <input type="date" name="date"><br>
+        <button type="submit">Зберегти</button>
+    </form>
+    <p style="color:red;">{{.}}</p>
+</body>
+</html>
