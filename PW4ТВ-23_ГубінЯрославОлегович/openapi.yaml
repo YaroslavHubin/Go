@@ -1,0 +1,272 @@
+openapi: 3.0.0
+info:
+  title: Energy System API
+  version: 1.0.0
+  description: REST API для керування об'єктами енергосистеми (станції, генератори, мережі, споживачі, датчики)
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /stations:
+    get:
+      summary: Отримати всі зарядні станції
+      responses:
+        '200':
+          description: Список станцій
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChargingStation'
+  /stations/create:
+    post:
+      summary: Додати нову станцію
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChargingStation'
+      responses:
+        '201':
+          description: Станцію створено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargingStation'
+        '400':
+          description: Некоректні дані
+  /stations/delete:
+    delete:
+      summary: Видалити станцію за ID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Станцію видалено
+        '404':
+          description: Станцію не знайдено
+
+  /generators:
+    get:
+      summary: Отримати всі генератори
+      responses:
+        '200':
+          description: Список генераторів
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Generator'
+  /generators/create:
+    post:
+      summary: Додати новий генератор
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Generator'
+      responses:
+        '201':
+          description: Генератор створено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Generator'
+        '400':
+          description: Некоректні дані
+  /generators/delete:
+    delete:
+      summary: Видалити генератор за ID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Генератор видалено
+        '404':
+          description: Генератор не знайдено
+
+  /networks:
+    get:
+      summary: Отримати всі мережі
+      responses:
+        '200':
+          description: Список мереж
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Network'
+  /networks/create:
+    post:
+      summary: Додати нову мережу
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Network'
+      responses:
+        '201':
+          description: Мережу створено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Network'
+        '400':
+          description: Некоректні дані
+  /networks/delete:
+    delete:
+      summary: Видалити мережу за ID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Мережу видалено
+        '404':
+          description: Мережу не знайдено
+
+  /consumers:
+    get:
+      summary: Отримати всіх споживачів
+      responses:
+        '200':
+          description: Список споживачів
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Consumer'
+  /consumers/create:
+    post:
+      summary: Додати нового споживача
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Consumer'
+      responses:
+        '201':
+          description: Споживача створено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consumer'
+        '400':
+          description: Некоректні дані
+  /consumers/delete:
+    delete:
+      summary: Видалити споживача за ID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Споживача видалено
+        '404':
+          description: Споживача не знайдено
+
+  /sensors:
+    get:
+      summary: Отримати всі датчики
+      responses:
+        '200':
+          description: Список датчиків
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sensor'
+  /sensors/create:
+    post:
+      summary: Додати новий датчик
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sensor'
+      responses:
+        '201':
+          description: Датчик створено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sensor'
+        '400':
+          description: Некоректні дані
+  /sensors/delete:
+    delete:
+      summary: Видалити датчик за ID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Датчик видалено
+        '404':
+          description: Датчик не знайдено
+
+components:
+  schemas:
+    ChargingStation:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        location: { type: string, example: Kyiv Center }
+        power_kw: { type: integer, example: 50 }
+        status: { type: string, enum: [available, busy, offline], example: available }
+
+    Generator:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        power_kw: { type: integer, example: 500 }
+        status: { type: string, example: active }
+
+    Network:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        voltage: { type: integer, example: 220 }
+        status: { type: string, example: stable }
+
+    Consumer:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        name: { type: string, example: Office Building }
+        demand_kw: { type: integer, example: 200 }
+
+    Sensor:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        type: { type: string, example: temperature }
+        value: { type: string, example: 25C }
