@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статистика зарядних станцій</title>
+</head>
+<body>
+    <h1>Статистика зарядних станцій</h1>
+    <form method="get" action="/stats">
+        Фільтр по локації: <input type="text" name="location">
+        <button type="submit">Фільтрувати</button>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Локація</th>
+            <th>Середня тривалість (хв)</th>
+            <th>Макс. енергія (кВт·год)</th>
+            <th>Кількість сесій</th>
+        </tr>
+        {{range .}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td>{{.Name}}</td>
+            <td>{{.Location}}</td>
+            <td>{{printf "%.2f" .AvgDuration}}</td>
+            <td>{{.MaxEnergy}}</td>
+            <td>{{.TotalSessions}}</td>
+        </tr>
+        {{end}}
+    </table>
+
+    <p><a href="/">Повернутися до списку станцій</a></p>
+</body>
+</html>
