@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: EV Charging Stations API
+  version: 1.0.0
+paths:
+  /api/stations:
+    get:
+      summary: Отримати список станцій
+      responses:
+        '200':
+          description: Список станцій
+    post:
+      summary: Створити нову станцію
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Station'
+      responses:
+        '201':
+          description: Створено
+  /api/sessions:
+    post:
+      summary: Додати зарядну сесію
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+      responses:
+        '201': { description: Створено }
+  /api/stats:
+    get:
+      summary: Отримати статистику
+      responses:
+        '200':
+          description: Статистика
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stat'
+components:
+  schemas:
+    Station:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        power: { type: integer }
+        slots: { type: integer }
+        location: { type: string }
+    Session:
+      type: object
+      properties:
+        id: { type: integer }
+        stationId: { type: integer }
+        duration: { type: integer }
+        energy: { type: integer }
+    Stat:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        location: { type: string }
+        avgDuration: { type: number, format: float }
+        maxEnergy: { type: integer }
+        totalSessions: { type: integer }

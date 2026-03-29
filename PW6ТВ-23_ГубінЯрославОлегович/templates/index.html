@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EV Charging Stations</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Зарядні станції</h1>
+
+    {{if .UserName}}
+        <p>Ви увійшли як: <strong>{{.UserName}}</strong></p>
+        <p><a href="/profile">Переглянути профіль</a></p>
+    {{end}}
+
+    <table>
+        <tr><th>ID</th><th>Назва</th><th>Потужність</th><th>Місця</th><th>Локація</th><th>Дії</th></tr>
+        {{range .Stations}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td>{{.Name}}</td>
+            <td>{{.Power}}</td>
+            <td>{{.Slots}}</td>
+            <td>{{.Location}}</td>
+            <td>
+                <form action="/update" method="post">
+                    <input type="hidden" name="id" value="{{.ID}}">
+                    <input type="text" name="name" value="{{.Name}}">
+                    <input type="number" name="power" value="{{.Power}}">
+                    <input type="number" name="slots" value="{{.Slots}}">
+                    <input type="text" name="location" value="{{.Location}}">
+                    <button type="submit">Оновити</button>
+                </form>
+                <a href="/delete?id={{.ID}}">Видалити</a>
+            </td>
+        </tr>
+        {{end}}
+    </table>
+
+    <h2>Додати нову станцію</h2>
+    <form action="/create" method="post">
+        Назва: <input type="text" name="name"><br>
+        Потужність: <input type="number" name="power"><br>
+        Місця: <input type="number" name="slots"><br>
+        Локація: <input type="text" name="location"><br>
+        <button type="submit">Додати</button>
+    </form>
+
+    <h2>Додати нову зарядну сесію</h2>
+    <form action="/addsession" method="post">
+        ID станції: <input type="number" name="station_id"><br>
+        Тривалість (хв): <input type="number" name="duration"><br>
+        Енергія (кВт·год): <input type="number" name="energy"><br>
+        <button type="submit">Додати сесію</button>
+    </form>
+
+    <p><a href="/stats">Переглянути статистику</a></p>
+</body>
+</html>

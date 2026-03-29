@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Реєстрація</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Реєстрація</h1>
+    {{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+    <form method="post" action="/register">
+        Ім'я: <input type="text" name="name" required><br>
+        Email: <input type="email" name="email" required><br>
+        Пароль: <input type="password" name="password" required><br>
+        <button type="submit">Зареєструватися</button>
+    </form>
+    <p><a href="/login">Повернутися до входу</a></p>
+</body>
+</html>
